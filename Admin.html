@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Admin Dashboard</h1>
+            <p class="subtitle">Overall system summary and staff directory</p>
+        </div>
+
+        <div class="content">
+            <h2>Summary</h2>
+            <p>At-a-glance metrics for administrators.</p>
+
+            <div class="dashboard">
+                <div class="cards">
+                    <div class="card alert">
+                        <div class="card-left">
+                            <h3>Patient Alerts</h3>
+                            <p class="metric" id="a_alertsCount">3</p>
+                            <p class="small">High-priority notifications</p>
+                        </div>
+                        <div class="card-right">
+                            <a href="#" class="card-link">View</a>
+                        </div>
+                    </div>
+
+                    <div class="card beds">
+                        <div class="card-left">
+                            <h3>Beds Available</h3>
+                            <p class="metric" id="a_bedsCount">12</p>
+                            <p class="small">Current free beds</p>
+                        </div>
+                        <div class="card-right">
+                            <a href="#" class="card-link">Assign</a>
+                        </div>
+                    </div>
+
+                    <div class="card medicine">
+                        <div class="card-left">
+                            <h3>Medicine</h3>
+                            <p class="metric" id="a_medCount">7</p>
+                            <p class="small">Low-stock items</p>
+                        </div>
+                        <div class="card-right">
+                            <a href="#" class="card-link">Reorder</a>
+                        </div>
+                    </div>
+
+                    <div class="card orders">
+                        <div class="card-left">
+                            <h3>Orders</h3>
+                            <p class="metric" id="a_ordersCount">5</p>
+                            <p class="small">Pending processing</p>
+                        </div>
+                        <div class="card-right">
+                            <a href="#" class="card-link">Process</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="staff-section">
+                <h3>Staff Directory</h3>
+                <div class="staff-list">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Shift</th>
+                                <th>Contact</th>
+                            </tr>
+                        </thead>
+                        <tbody id="staffTbody">
+                            <tr><td>Loading...</td><td></td><td></td><td></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+
+        (function(){
+            const data = {
+                alerts: 3,
+                beds: 12,
+                medLow: 7,
+                orders: 5,
+                staff: [
+                    {name: 'Alice Johnson', role: 'Head Nurse', shift: 'Day', contact: 'alice.j@example.com'},
+                    {name: 'Bob Smith', role: 'Nurse', shift: 'Night', contact: 'bob.s@example.com'},
+                    {name: 'Carlos Ruiz', role: 'Physician', shift: 'Day', contact: 'carlos.r@example.com'}
+                ]
+            };
+
+            document.getElementById('a_alertsCount').textContent = data.alerts;
+            document.getElementById('a_bedsCount').textContent = data.beds;
+            document.getElementById('a_medCount').textContent = data.medLow;
+            document.getElementById('a_ordersCount').textContent = data.orders;
+
+            const tbody = document.getElementById('staffTbody');
+            tbody.innerHTML = '';
+            data.staff.forEach(s => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${s.name}</td><td>${s.role}</td><td>${s.shift}</td><td>${s.contact}</td>`;
+                tbody.appendChild(tr);
+            });
+        })();
+    </script>
+</body>
+</html>
