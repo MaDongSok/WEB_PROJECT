@@ -1,0 +1,9 @@
+# Add gitignore to secure our database information
+
+
+# Ignore environment variable files
+.env
+
+
+#ignore node_modules
+node_modules/
