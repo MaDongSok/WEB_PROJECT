@@ -85,31 +85,25 @@ function validateConfirm() {
 }
 
 // Register Button
-function handleRegister(btn) {
-  const user = document.getElementById('username').value;
-  const email = document.getElementById('email').value;
-  const pw1 = document.getElementById('pw1').value;
-  const pw2 = document.getElementById('pw2').value;
-  const terms = document.getElementById('terms').checked;
-
-  validateUsername(); validateEmail(); validateConfirm();
-  if (user.length < 3 || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || pw1 !== pw2 || !pw1 || !terms) return;
-
-  const orig = btn.innerHTML;
-  btn.innerHTML = '&gt;_ INITIALIZING...';
-  btn.disabled = true;
-  let dots = 0;
-  const iv = setInterval(() => {
-    dots = (dots + 1) % 4;
-    btn.innerHTML = `&gt;_ CREATING ACCOUNT${'.'.repeat(dots)}`;
-  }, 300);
-  setTimeout(() => {
-    clearInterval(iv);
-    btn.innerHTML = '&gt;_ ACCESS GRANTED ✓';
-    btn.style.background = '#00ff41';
-    setTimeout(() => {
-      btn.innerHTML = orig;
-      btn.disabled = false;
-    }, 2000);
-  }, 2500);
+function handleRegister(button) {
+ 
+  const username = document.querySelector('#username').value;
+  const email = document.querySelector('#email').value;
+  const password = document.querySelector('#pw1').value;
+  
+  fetch('http://localhost:3000/api/register', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ username, email, password })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.message) {
+      alert('Registration successful');
+      // Redirect to login
+    } else {
+      alert(data.error);
+    }
+  })
+  .catch(err => console.error(err));
 }

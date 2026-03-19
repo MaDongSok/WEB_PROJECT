@@ -42,20 +42,25 @@ function togglePW() {
 }
 
 // Login Button Effect
-function handleLogin(btn) {
-  const orig = btn.innerHTML;
-  btn.innerHTML = '&gt;_ AUTHENTICATING...';
-  btn.style.opacity = '0.7';
-  btn.disabled = true;
-  let dots = 0;
-  const iv = setInterval(() => {
-    dots = (dots + 1) % 4;
-    btn.innerHTML = '&gt;_ AUTHENTICATING' + '.'.repeat(dots);
-  }, 300);
-  setTimeout(() => {
-    clearInterval(iv);
-    btn.innerHTML = orig;
-    btn.style.opacity = '1';
-    btn.disabled = false;
-  }, 2500);
+function handleLogin(button) {
+  
+  const email = document.querySelector('input[type="email"]').value;
+  const password = document.querySelector('#pw-input').value;
+  
+  fetch('http://localhost:3000/api/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.token) {
+      localStorage.setItem('token', data.token);
+      alert('Login successful');
+      // Redirect or update UI
+    } else {
+      alert(data.error);
+    }
+  })
+  .catch(err => console.error(err));
 }
